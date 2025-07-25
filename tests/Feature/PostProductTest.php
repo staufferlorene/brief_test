@@ -70,4 +70,6 @@ class PostProductTest extends TestCase
         $response->assertDontSee(100);
         $response->assertDontSee(25);
     }
+
+    // Modifier un produit existant et vérifier que la mise à jour est correct
 }
