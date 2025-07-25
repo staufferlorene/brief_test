@@ -23,24 +23,24 @@ jobs:
       group: laravel-tests-${{ github.workflow }}-${{ github.ref }}
       cancel-in-progress: true
 
-# récupération du code source
-steps:
+    # récupération du code source
+    steps:
 
-  - name: Checkout project
-    uses: actions/checkout@v3
+      - name: Checkout project
+        uses: actions/checkout@v3
 
-  - name: Initialize PHP ${{ env.php_version }}
-    uses: shivammathur/setup-php@v2
-    with:
-      php-version: ${{ env.php_version }}
-      coverage: pcov
+      - name: Initialize PHP ${{ env.php_version }}
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ env.php_version }}
+          coverage: pcov
 
-  # installation des dépendances
-  - name: Composer install
-    run: |
-      composer validate --strict
-      composer install --optimize-autoloader --no-interaction --prefer-dist
+      # installation des dépendances
+      - name: Composer install
+        run: |
+          composer validate --strict
+          composer install --optimize-autoloader --no-interaction --prefer-dist
 
-  # lancement des tests
-  - name: Test
-    run: php artisan test
+      # lancement des tests
+      - name: Test
+        run: php artisan test
