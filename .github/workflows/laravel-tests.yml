@@ -4,6 +4,8 @@ name: laravel-tests
 on:
   pull_request:
     branches: [ master ]
+    paths:
+      - 'tests/Unit/ProductTest.php'
 
 # définition répertoire de travail
 defaults:
