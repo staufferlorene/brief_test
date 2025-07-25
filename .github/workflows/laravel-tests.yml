@@ -4,12 +4,6 @@ name: laravel-tests
 on:
   push:
     branches: [ main ]
-    paths:
-      - 'tests/Unit/ProductTest.php'
-      - 'tests/Feature/PostProductTest.php'
-  pull_request:
-    branches: [ main ]
-
 
 # définition répertoire de travail
 defaults:
@@ -18,7 +12,6 @@ defaults:
 
 # variable d'environnement
 env:
-  <ma variable d'env>: <ma valeur>
   php_version: 8.3
 
 jobs:
@@ -29,7 +22,7 @@ jobs:
       group: laravel-tests-${{ github.workflow }}-${{ github.ref }}
       cancel-in-progress: true
 
-    # récupération du code source
+    # récupération du code source et clonage projet
     steps:
 
       - name: Checkout project
