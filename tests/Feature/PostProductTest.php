@@ -44,7 +44,41 @@ class PostProductTest extends TestCase
         $response->assertSee(25);
     }
 
-    /*Supprimer un produit et vérifier qu'il disparait de la BDD*/
+    // Modifier un produit existant et vérifier que la mise à jour est correct
+    public function testUpdateProduct(): void
+    {
+        // création d'un nouveau produit avec ces données
+        $productData = ([
+            'name' => 'iPhone 15 Pro',
+            'description' => 'Le dernier iPhone avec des fonctionnalités avancées et un design premium.',
+            'price' => 1199.99,
+            'stock' => 25,
+        ]);
+
+        // données modifiées du produit
+        $productEdit = ([
+            'name' => 'produit modif',
+            'description' => 'ceci est la description du produit modif',
+            'price' => 150,
+            'stock' => 12,
+        ]);
+
+        // appel de la fonction de création puis de modification
+        $product = Product::create($productData);
+
+        $response = $this->put("/products/{$product->id}", $productEdit);
+
+        // redirection après màj
+        $response->assertRedirect('/products');
+
+        // success sur la vue
+        $response->assertSessionHas('success');
+
+        // vérifier que présent en DB
+        $this->assertDatabaseHas('products', $productEdit);
+    }
+
+    /*Supprimer un produit*/
 
     public function testDeleteProduct(): void
     {
@@ -55,7 +89,6 @@ class PostProductTest extends TestCase
             'price' => 100,
             'stock' => 25,
         ]);
-
 
         // delete du produit par rapport à son id
         $response = $this->delete("/products/{$productData->id}");
@@ -71,6 +104,17 @@ class PostProductTest extends TestCase
         $response->assertDontSee(25);
     }
 
-    // Modifier un produit existant et vérifier que la mise à jour est correct
+    // Vérification des erreurs de validation
+    public function testValidate(): void
+    {
+        // création du produit
+        $product = Product::create([
+            'name' => '',
+            'description' => 'description produit ajouté',
+            'price' => -2,
+            'stock' => 25,
+        ]);
 
+        $this->assertDatabaseMissing('products', [$product]);
+    }
 }
