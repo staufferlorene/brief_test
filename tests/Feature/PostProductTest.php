@@ -57,9 +57,11 @@ class PostProductTest extends TestCase
         ]);
 
 
-        // redirection après delete
+        // delete du produit par rapport à son id
         $response = $this->delete("/products/{$productData->id}");
-        $response->assertRedirect("/products");
+        // redirection après delete
+        $response->assertRedirect('/products');
+        // success sur la vue
         $response->assertSessionHas('success');
 
         // produit non visible
