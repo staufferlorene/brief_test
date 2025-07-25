@@ -3,7 +3,7 @@ name: laravel-tests
 # évènement qui déclenche les tests
 on:
   pull_request:
-    branches: [ master ]
+    branches: [ main ]
     paths:
       - 'tests/Unit/ProductTest.php'
 
