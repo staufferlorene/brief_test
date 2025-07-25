@@ -72,4 +72,5 @@ class PostProductTest extends TestCase
     }
 
     // Modifier un produit existant et vérifier que la mise à jour est correct
+
 }
